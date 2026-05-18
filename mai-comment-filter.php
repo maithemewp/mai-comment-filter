@@ -142,6 +142,27 @@ final class Mai_Comment_Filter {
 	 */
 	public function hooks() {
 		add_action( 'admin_init', array( $this, 'updater' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_plugin_links' ) );
+	}
+
+	/**
+	 * Add plugin action links.
+	 *
+	 * @since TBD
+	 *
+	 * @param array $actions The existing actions.
+	 *
+	 * @return array
+	 */
+	public function add_plugin_links( $actions ) {
+		$custom = array(
+			'settings' => sprintf(
+				'<a href="%s">%s</a>',
+				admin_url( 'options-general.php?page=comment_filter' ),
+				__( 'Settings', 'mai-comment-filter' )
+			),
+		);
+		return array_merge( $custom, $actions );
 	}
 
 	/**
